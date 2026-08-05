@@ -69,7 +69,7 @@
         }
         button {
             width: 100%;
-            background-color: #25d366;
+            background-color: #004085;
             color: white;
             padding: 12px;
             border: none;
@@ -80,7 +80,69 @@
             margin-top: 10px;
         }
         button:hover {
-            background-color: #128c7e;
+            background-color: #002752;
+        }
+
+        /* Receipt Styles */
+        #receiptBox {
+            display: none;
+            border: 2px dashed #004085;
+            padding: 25px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .receipt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .receipt-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 15px;
+        }
+        .receipt-table td.title {
+            font-weight: bold;
+            color: #004085;
+            width: 40%;
+        }
+        .status-badge {
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .print-btn {
+            background-color: #28a745;
+        }
+        .print-btn:hover {
+            background-color: #218838;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+            #receiptBox {
+                border: 1px solid #000;
+            }
         }
         @media (max-width: 600px) {
             .row {
@@ -92,101 +154,161 @@
 <body>
 
 <div class="container">
-    <div class="header">
-        <h1>New Apprehensive Public School</h1>
-        <p>Baruna, Buxar, Bihar | Online Admission Form</p>
+    <!-- ADMISSION FORM -->
+    <div id="formBox">
+        <div class="header">
+            <h1>New Apprehensive Public School</h1>
+            <p>Baruna, Buxar, Bihar | Online Admission Form</p>
+        </div>
+
+        <form id="admissionForm">
+            <div class="form-group">
+                <label for="studentName">Student's Full Name (छात्र का पूरा नाम) *</label>
+                <input type="text" id="studentName" required>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label for="dob">Date of Birth (जन्म तिथि) *</label>
+                    <input type="date" id="dob" required>
+                </div>
+                <div class="col form-group">
+                    <label for="gender">Gender (लिंग) *</label>
+                    <select id="gender" required>
+                        <option value="">Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
+                    <label for="classSelect">Admission Class (कक्षा) *</label>
+                    <select id="classSelect" required>
+                        <option value="">Select Class</option>
+                        <option value="Nursery">Nursery</option>
+                        <option value="LKG">LKG</option>
+                        <option value="UKG">UKG</option>
+                        <option value="Class 1">Class 1</option>
+                        <option value="Class 2">Class 2</option>
+                        <option value="Class 3">Class 3</option>
+                        <option value="Class 4">Class 4</option>
+                        <option value="Class 5">Class 5</option>
+                    </select>
+                </div>
+                <div class="col form-group">
+                    <label for="phone">Contact Number (मोबाइल नंबर) *</label>
+                    <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10 digits" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fatherName">Father's Name (पिता का नाम) *</label>
+                <input type="text" id="fatherName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="motherName">Mother's Name (माता का नाम) *</label>
+                <input type="text" id="motherName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Full Address (पूरा पता) *</label>
+                <textarea id="address" rows="3" required></textarea>
+            </div>
+
+            <button type="submit">Submit & Generate Receipt</button>
+        </form>
     </div>
 
-    <form id="admissionForm">
-        <div class="form-group">
-            <label for="studentName">Student's Full Name (छात्र का पूरा नाम) *</label>
-            <input type="text" id="studentName" required>
+    <!-- ADMISSION RECEIPT -->
+    <div id="receiptBox">
+        <div class="receipt-header">
+            <h2>NEW APPREHENSIVE PUBLIC SCHOOL</h2>
+            <p>Baruna, Buxar, Bihar</p>
+            <h3 style="margin-top: 10px; color: #004085;">ADMISSION ACKNOWLEDGEMENT RECEIPT</h3>
         </div>
 
-        <div class="row">
-            <div class="col form-group">
-                <label for="dob">Date of Birth (जन्म तिथि) *</label>
-                <input type="date" id="dob" required>
-            </div>
-            <div class="col form-group">
-                <label for="gender">Gender (लिंग) *</label>
-                <select id="gender" required>
-                    <option value="">Select</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
+        <table class="receipt-table">
+            <tr>
+                <td class="title">Application No:</td>
+                <td><strong id="rAppNo"></strong></td>
+            </tr>
+            <tr>
+                <td class="title">Submission Date:</td>
+                <td id="rDate"></td>
+            </tr>
+            <tr>
+                <td class="title">Student Name:</td>
+                <td id="rStudentName"></td>
+            </tr>
+            <tr>
+                <td class="title">Date of Birth:</td>
+                <td id="rDob"></td>
+            </tr>
+            <tr>
+                <td class="title">Gender:</td>
+                <td id="rGender"></td>
+            </tr>
+            <tr>
+                <td class="title">Applying For Class:</td>
+                <td id="rClass"></td>
+            </tr>
+            <tr>
+                <td class="title">Father's Name:</td>
+                <td id="rFatherName"></td>
+            </tr>
+            <tr>
+                <td class="title">Mother's Name:</td>
+                <td id="rMotherName"></td>
+            </tr>
+            <tr>
+                <td class="title">Contact Number:</td>
+                <td id="rPhone"></td>
+            </tr>
+            <tr>
+                <td class="title">Address:</td>
+                <td id="rAddress"></td>
+            </tr>
+            <tr>
+                <td class="title">Status:</td>
+                <td><span class="status-badge">Submitted Online</span></td>
+            </tr>
+        </table>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 13px; color: #555;">
+            <p>Please keep a copy of this receipt for school document verification.</p>
         </div>
 
-        <div class="row">
-            <div class="col form-group">
-                <label for="classSelect">Admission Class (कक्षा) *</label>
-                <select id="classSelect" required>
-                    <option value="">Select Class</option>
-                    <option value="Nursery">Nursery</option>
-                    <option value="LKG">LKG</option>
-                    <option value="UKG">UKG</option>
-                    <option value="Class 1">Class 1</option>
-                    <option value="Class 2">Class 2</option>
-                    <option value="Class 3">Class 3</option>
-                    <option value="Class 4">Class 4</option>
-                    <option value="Class 5">Class 5</option>
-                </select>
-            </div>
-            <div class="col form-group">
-                <label for="phone">Contact Number (मोबाइल नंबर) *</label>
-                <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10 digits" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="fatherName">Father's Name (पिता का नाम) *</label>
-            <input type="text" id="fatherName" required>
-        </div>
-
-        <div class="form-group">
-            <label for="motherName">Mother's Name (माता का नाम) *</label>
-            <input type="text" id="motherName" required>
-        </div>
-
-        <div class="form-group">
-            <label for="address">Full Address (पूरा पता) *</label>
-            <textarea id="address" rows="3" required></textarea>
-        </div>
-
-        <button type="submit">Submit via WhatsApp</button>
-    </form>
+        <button class="print-btn no-print" onclick="window.print()">Print / Download Receipt (PDF)</button>
+    </div>
 </div>
 
 <script>
 document.getElementById('admissionForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    // Yahan apna 10-digit WhatsApp mobile number likhein (Jaise: 919876543210)
-    var schoolWhatsAppNumber = "9546827830"; 
 
-    var sName = document.getElementById('studentName').value;
-    var dob = document.getElementById('dob').value;
-    var gender = document.getElementById('gender').value;
-    var cls = document.getElementById('classSelect').value;
-    var phone = document.getElementById('phone').value;
-    var fName = document.getElementById('fatherName').value;
-    var mName = document.getElementById('motherName').value;
-    var address = document.getElementById('address').value;
+    // Generate Random Application Number
+    var randomAppNo = 'NAPS-' + Math.floor(100000 + Math.random() * 900000);
+    var today = new Date().toLocaleDateString('en-IN');
 
-    var message = "New Admission Request - New Apprehensive Public School%0A%0A" +
-                  "Student Name: " + sName + "%0A" +
-                  "DOB: " + dob + "%0A" +
-                  "Gender: " + gender + "%0A" +
-                  "Class: " + cls + "%0A" +
-                  "Father's Name: " + fName + "%0A" +
-                  "Mother's Name: " + mName + "%0A" +
-                  "Contact: " + phone + "%0A" +
-                  "Address: " + address;
+    // Set Values in Receipt
+    document.getElementById('rAppNo').innerText = randomAppNo;
+    document.getElementById('rDate').innerText = today;
+    document.getElementById('rStudentName').innerText = document.getElementById('studentName').value;
+    document.getElementById('rDob').innerText = document.getElementById('dob').value;
+    document.getElementById('rGender').innerText = document.getElementById('gender').value;
+    document.getElementById('rClass').innerText = document.getElementById('classSelect').value;
+    document.getElementById('rFatherName').innerText = document.getElementById('fatherName').value;
+    document.getElementById('rMotherName').innerText = document.getElementById('motherName').value;
+    document.getElementById('rPhone').innerText = document.getElementById('phone').value;
+    document.getElementById('rAddress').innerText = document.getElementById('address').value;
 
-    var whatsappURL = "https://wa.me/" + schoolWhatsAppNumber + "?text=" + message;
-    window.open(whatsappURL, '_blank');
+    // Hide Form and Show Receipt
+    document.getElementById('formBox').style.display = 'none';
+    document.getElementById('receiptBox').style.display = 'block';
 });
 </script>
 
