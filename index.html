@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta name="google-site-verification" content="yr3GGXavavD7zyqvP9P8moWmzOsrEjnk7YxovXG4OL8" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Admission - New Apprehensive Baruna</title>
+    <title>Online Admission & ID Card - New Apprehensive Public School, Baruna</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,48 +12,52 @@
             padding: 0;
         }
         body {
-            background-color: #f4f7f6;
+            background-color: #f0f4f8;
             color: #333;
             padding: 20px;
         }
         .container {
-            max-width: 750px;
+            max-width: 780px;
             margin: 0 auto;
             background: #ffffff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
         }
         
-        /* Header & Logo Section */
+        /* Header Styling */
         .school-header {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 20px;
-            border-bottom: 2px solid #004085;
-            padding-bottom: 15px;
+            border-bottom: 3px double #004085;
+            padding-bottom: 20px;
             margin-bottom: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .logo-svg {
+            width: 75px;
+            height: 75px;
+            flex-shrink: 0;
+        }
+        .header-text {
             text-align: center;
         }
-        .school-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #004085;
-        }
         .header-text h1 {
-            color: #004085;
+            color: #002752;
             font-size: 24px;
+            font-weight: 800;
             text-transform: uppercase;
         }
-        .header-text p {
-            color: #666;
+        .header-text p.address {
+            color: #d9534f;
             font-size: 14px;
+            font-weight: bold;
             margin-top: 4px;
         }
-
         .section-title {
             background: #e9ecef;
             padding: 8px 12px;
@@ -79,10 +82,6 @@
             border-radius: 5px;
             font-size: 15px;
         }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #004085;
-        }
         .row {
             display: flex;
             gap: 15px;
@@ -102,119 +101,111 @@
             cursor: pointer;
             margin-top: 10px;
         }
-        .btn-main:hover {
-            background-color: #002752;
-        }
-        .btn-edit {
-            background-color: #6c757d;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            flex: 1;
-        }
-        .btn-edit:hover {
-            background-color: #5a6268;
-        }
-        .btn-submit {
-            background-color: #28a745;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            flex: 1;
-        }
-        .btn-submit:hover {
-            background-color: #218838;
-        }
 
-        /* Preview & Receipt Styles */
-        #previewBox, #receiptBox {
+        /* EXACT CR-80 HORIZONTAL ID CARD (3.375in x 2.125in) */
+        #idCardContainer {
             display: none;
-            border: 2px dashed #004085;
-            padding: 25px;
-            border-radius: 8px;
-            background: #fafafa;
-        }
-        .preview-header, .receipt-header {
+            margin-top: 20px;
             text-align: center;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
         }
-        .preview-top, .receipt-top {
+        .id-card {
+            width: 3.375in;
+            height: 2.125in;
+            border: 1.5px solid #004085;
+            border-radius: 8px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+            text-align: left;
+            padding: 0;
+        }
+        .id-card-header {
+            background: #004085;
+            color: white;
+            padding: 4px 6px;
+            text-align: center;
+        }
+        .id-card-header h3 {
+            font-size: 9.5pt;
+            text-transform: uppercase;
+            line-height: 1.1;
+            font-weight: 800;
+        }
+        .id-card-header p {
+            font-size: 6.5pt;
+            color: #ffda6a;
+        }
+        .id-card-content {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
+            padding: 6px;
+            gap: 8px;
         }
-        .student-photo-preview {
-            width: 110px;
-            height: 130px;
-            border: 2px solid #333;
+        .id-photo-box {
+            width: 0.75in;
+            text-align: center;
+        }
+        .id-photo {
+            width: 0.75in;
+            height: 0.95in;
+            border: 1px solid #004085;
+            border-radius: 4px;
             object-fit: cover;
-            background: #e9ecef;
-            display: block;
         }
-        .data-table {
+        .id-card-body {
+            flex: 1;
+            font-size: 7pt;
+            line-height: 1.25;
+        }
+        .id-card-body table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
         }
-        .data-table td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #ddd;
-            font-size: 14px;
+        .id-card-body td {
+            padding: 1px 0;
+            vertical-align: top;
         }
-        .data-table td.title {
+        .id-card-body td.label {
             font-weight: bold;
             color: #004085;
-            width: 35%;
+            width: 38%;
         }
-        .status-badge {
-            background: #28a745;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
+        .id-card-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: #f8f9fa;
+            border-top: 1px solid #ddd;
+            padding: 3px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 6pt;
+        }
+        .sign-box {
+            text-align: center;
+        }
+        .sign-line {
+            border-top: 1px dashed #333;
+            width: 45px;
+            margin-top: 8px;
         }
 
+        /* PRINT SETTINGS (Exact Inch Output) */
         @media print {
-            body {
-                background: white;
-                padding: 0;
+            body * {
+                visibility: hidden;
             }
-            .container {
+            .id-card, .id-card * {
+                visibility: visible;
+            }
+            .id-card {
+                position: absolute;
+                left: 0;
+                top: 0;
                 box-shadow: none;
-                border: none;
-                padding: 0;
-            }
-            .no-print {
-                display: none;
-            }
-            #receiptBox {
-                border: 1px solid #000;
-            }
-        }
-        @media (max-width: 600px) {
-            .school-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .row {
-                flex-direction: column;
-            }
-            .preview-top, .receipt-top {
-                flex-direction: column-reverse;
-                align-items: center;
-                gap: 15px;
+                page-break-after: always;
             }
         }
     </style>
@@ -222,61 +213,36 @@
 <body>
 
 <div class="container">
-    <!-- STEP 1: ADMISSION FORM -->
+    <!-- ADMISSION FORM -->
     <div id="formBox">
         <div class="school-header">
-            <img class="school-logo" src="https://via.placeholder.com/100?text=LOGO" alt="School Logo">
+            <svg class="logo-svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="48" fill="#004085" stroke="#d9534f" stroke-width="3"/>
+                <circle cx="50" cy="50" r="40" fill="#ffffff"/>
+                <path d="M50 22 L75 35 L50 48 L25 35 Z" fill="#004085"/>
+                <path d="M35 42 L35 58 C35 63 65 63 65 58 L65 42" fill="none" stroke="#004085" stroke-width="3"/>
+            </svg>
             <div class="header-text">
                 <h1>New Apprehensive Public School</h1>
-                <p>Baruna, Buxar, Bihar | Online Admission Form</p>
+                <p class="address">📍 Baruna, Buxar, Bihar</p>
             </div>
         </div>
 
         <form id="admissionForm">
-            <div class="section-title">1. Student Information (छात्र की जानकारी)</div>
+            <div class="section-title">1. Student Information</div>
             
             <div class="form-group">
-                <label for="studentName">Student's Full Name (छात्र का पूरा नाम) *</label>
+                <label>Student's Full Name *</label>
                 <input type="text" id="studentName" required>
             </div>
 
             <div class="row">
                 <div class="col form-group">
-                    <label for="dob">Date of Birth (जन्म तिथि) *</label>
+                    <label>Date of Birth *</label>
                     <input type="date" id="dob" required>
                 </div>
                 <div class="col form-group">
-                    <label for="gender">Gender (लिंग) *</label>
-                    <select id="gender" required>
-                        <option value="">Select</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col form-group">
-                    <label for="caste">Caste Category (वर्ग/जाति) *</label>
-                    <select id="caste" required>
-                        <option value="">Select Category</option>
-                        <option value="General">General</option>
-                        <option value="OBC">OBC</option>
-                        <option value="SC">SC</option>
-                        <option value="ST">ST</option>
-                        <option value="EWS">EWS</option>
-                    </select>
-                </div>
-                <div class="col form-group">
-                    <label for="aadhar">Aadhaar Number (आधार नंबर) *</label>
-                    <input type="text" id="aadhar" maxlength="12" pattern="[0-9]{12}" placeholder="12 Digit Aadhaar" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col form-group">
-                    <label for="classSelect">Admission Class (कक्षा) *</label>
+                    <label>Admission Class *</label>
                     <select id="classSelect" required>
                         <option value="">Select Class</option>
                         <option value="Nursery">Nursery</option>
@@ -289,207 +255,100 @@
                         <option value="Class 5">Class 5</option>
                     </select>
                 </div>
-                <div class="col form-group">
-                    <label for="photoInput">Student Photo (छात्र की फोटो) *</label>
-                    <input type="file" id="photoInput" accept="image/*" required>
-                </div>
-            </div>
-
-            <div class="section-title">2. Parent / Guardian Information (अभिभावक की जानकारी)</div>
-
-            <div class="form-group">
-                <label for="fatherName">Father's Name (पिता का नाम) *</label>
-                <input type="text" id="fatherName" required>
-            </div>
-
-            <div class="form-group">
-                <label for="motherName">Mother's Name (माता का नाम) *</label>
-                <input type="text" id="motherName" required>
             </div>
 
             <div class="row">
                 <div class="col form-group">
-                    <label for="phone">Contact Number (मोबाइल नंबर) *</label>
-                    <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10 digits" required>
+                    <label>Father's Name *</label>
+                    <input type="text" id="fatherName" required>
+                </div>
+                <div class="col form-group">
+                    <label>Contact Number *</label>
+                    <input type="tel" id="phone" pattern="[0-9]{10}" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="address">Full Address (पूरा पता) *</label>
+                <label>Student Photo *</label>
+                <input type="file" id="photoInput" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label>Full Address *</label>
                 <textarea id="address" rows="2" required></textarea>
             </div>
 
-            <div class="section-title">3. Fee Structure (शुल्क का विवरण)</div>
-            <div class="row">
-                <div class="col form-group">
-                    <label for="regFee">Registration Fee (रजिस्ट्रेशन शुल्क ₹)</label>
-                    <input type="number" id="regFee" value="100">
-                </div>
-                <div class="col form-group">
-                    <label for="admFee">Admission Fee (एडमिशन शुल्क ₹)</label>
-                    <input type="number" id="admFee" value="500">
-                </div>
-            </div>
-
-            <button type="submit" class="btn-main">Preview Application Form</button>
+            <button type="submit" class="btn-main">Generate Student ID Card</button>
         </form>
     </div>
 
-    <!-- STEP 2: PREVIEW WINDOW -->
-    <div id="previewBox">
-        <div class="preview-header">
-            <h2>APPLICATION PREVIEW</h2>
-            <p style="color: #d9534f; font-weight: bold; margin-top: 5px;">Kripya saari details dhyan se jaanch lein</p>
-        </div>
+    <!-- GENERATED STUDENT ID CARD (Exact 3.375 x 2.125 inches) -->
+    <div id="idCardContainer">
+        <h2 style="color: #004085; margin-bottom: 15px;">Student Identity Card</h2>
 
-        <div class="preview-top">
-            <div style="flex: 1;">
-                <p><strong>School:</strong> New Apprehensive Public School, Baruna</p>
-                <p><strong>Preview Date:</strong> <span id="pDate"></span></p>
+        <div class="id-card">
+            <div class="id-card-header">
+                <h3>New Apprehensive Public School</h3>
+                <p>Baruna, Buxar, Bihar</p>
             </div>
-            <div>
-                <img id="pPhoto" class="student-photo-preview" src="" alt="Student Photo">
+
+            <div class="id-card-content">
+                <div class="id-photo-box">
+                    <img id="idPhoto" class="id-photo" src="" alt="Photo">
+                </div>
+
+                <div class="id-card-body">
+                    <table>
+                        <tr><td class="label">ID No:</td><td><strong id="idNo"></strong></td></tr>
+                        <tr><td class="label">Name:</td><td><strong id="idName"></strong></td></tr>
+                        <tr><td class="label">Class:</td><td id="idClass"></td></tr>
+                        <tr><td class="label">DOB:</td><td id="idDob"></td></tr>
+                        <tr><td class="label">Father:</td><td id="idFather"></td></tr>
+                        <tr><td class="label">Phone:</td><td id="idPhone"></td></tr>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <table class="data-table">
-            <tr><td class="title">Student Name:</td><td id="pStudentName"></td></tr>
-            <tr><td class="title">Date of Birth:</td><td id="pDob"></td></tr>
-            <tr><td class="title">Gender / Caste:</td><td><span id="pGender"></span> / <span id="pCaste"></span></td></tr>
-            <tr><td class="title">Aadhaar Number:</td><td id="pAadhar"></td></tr>
-            <tr><td class="title">Applying Class:</td><td id="pClass"></td></tr>
-            <tr><td class="title">Father's Name:</td><td id="pFatherName"></td></tr>
-            <tr><td class="title">Mother's Name:</td><td id="pMotherName"></td></tr>
-            <tr><td class="title">Contact Number:</td><td id="pPhone"></td></tr>
-            <tr><td class="title">Address:</td><td id="pAddress"></td></tr>
-            <tr><td class="title">Registration Fee:</td><td>₹<span id="pRegFee"></span></td></tr>
-            <tr><td class="title">Admission Fee:</td><td>₹<span id="pAdmFee"></span></td></tr>
-            <tr><td class="title">Total Fee:</td><td><strong>₹<span id="pTotalFee"></span></strong></td></tr>
-        </table>
-
-        <div class="row" style="margin-top: 20px;">
-            <button type="button" class="btn-edit" onclick="backToForm()">Edit Form (सुधार करें)</button>
-            <button type="button" class="btn-submit" onclick="finalSubmit()">Final Submit & Generate Receipt</button>
-        </div>
-    </div>
-
-    <!-- STEP 3: FINAL ADMISSION RECEIPT -->
-    <div id="receiptBox">
-        <div class="receipt-header">
-            <h2>NEW APPREHENSIVE PUBLIC SCHOOL</h2>
-            <p>Baruna, Buxar, Bihar</p>
-            <h3 style="margin-top: 8px; color: #004085;">ADMISSION ACKNOWLEDGEMENT RECEIPT</h3>
-        </div>
-
-        <div class="receipt-top">
-            <div style="flex: 1;">
-                <p><strong>Application No:</strong> <span id="rAppNo"></span></p>
-                <p><strong>Submission Date:</strong> <span id="rDate"></span></p>
-            </div>
-            <div>
-                <img id="rPhoto" class="student-photo-preview" src="" alt="Student Photo">
+            <div class="id-card-footer">
+                <div>
+                    <p style="color:#d9534f; font-weight:bold;">STUDENT CARD</p>
+                </div>
+                <div class="sign-box">
+                    <div class="sign-line"></div>
+                    <p style="font-weight:bold;">Principal</p>
+                </div>
             </div>
         </div>
 
-        <table class="data-table">
-            <tr><td class="title">Student Name:</td><td id="rStudentName"></td></tr>
-            <tr><td class="title">Date of Birth:</td><td id="rDob"></td></tr>
-            <tr><td class="title">Gender / Caste:</td><td><span id="rGender"></span> / <span id="rCaste"></span></td></tr>
-            <tr><td class="title">Aadhaar Number:</td><td id="rAadhar"></td></tr>
-            <tr><td class="title">Class Applied:</td><td id="rClass"></td></tr>
-            <tr><td class="title">Father's Name:</td><td id="rFatherName"></td></tr>
-            <tr><td class="title">Mother's Name:</td><td id="rMotherName"></td></tr>
-            <tr><td class="title">Contact Number:</td><td id="rPhone"></td></tr>
-            <tr><td class="title">Address:</td><td id="rAddress"></td></tr>
-            <tr><td class="title">Registration Fee:</td><td>₹<span id="rRegFee"></span></td></tr>
-            <tr><td class="title">Admission Fee:</td><td>₹<span id="rAdmFee"></span></td></tr>
-            <tr><td class="title">Total Payable Fee:</td><td><strong>₹<span id="rTotalFee"></span></strong></td></tr>
-            <tr><td class="title">Status:</td><td><span class="status-badge">Submitted Online</span></td></tr>
-        </table>
-
-        <div style="text-align: center; margin-top: 15px; font-size: 13px; color: #555;">
-            <p>Please bring a printed copy of this receipt along with original documents to the school office.</p>
-        </div>
-
-        <button class="btn-submit no-print" style="margin-top:20px; width:100%;" onclick="window.print()">Print / Download Receipt (PDF)</button>
+        <button onclick="window.print()" class="btn-main" style="width: 300px; margin-top: 20px; background-color: #28a745;">Print / Download ID Card</button>
     </div>
 </div>
 
 <script>
-var globalImageData = "";
-
-// Handle Form Submission -> Move to Preview
 document.getElementById('admissionForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    var today = new Date().toLocaleDateString('en-IN');
-    var regFeeVal = parseFloat(document.getElementById('regFee').value) || 0;
-    var admFeeVal = parseFloat(document.getElementById('admFee').value) || 0;
-    var totalFeeVal = regFeeVal + admFeeVal;
+    var randomId = 'NAPS-' + Math.floor(1000 + Math.random() * 9000);
 
-    // Load Photo
     var photoFile = document.getElementById('photoInput').files[0];
     if (photoFile) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            globalImageData = e.target.result;
-            document.getElementById('pPhoto').src = globalImageData;
-            document.getElementById('rPhoto').src = globalImageData;
+            document.getElementById('idPhoto').src = e.target.result;
         }
         reader.readAsDataURL(photoFile);
     }
 
-    // Assign Values to Preview
-    document.getElementById('pDate').innerText = today;
-    document.getElementById('pStudentName').innerText = document.getElementById('studentName').value;
-    document.getElementById('pDob').innerText = document.getElementById('dob').value;
-    document.getElementById('pGender').innerText = document.getElementById('gender').value;
-    document.getElementById('pCaste').innerText = document.getElementById('caste').value;
-    document.getElementById('pAadhar').innerText = document.getElementById('aadhar').value;
-    document.getElementById('pClass').innerText = document.getElementById('classSelect').value;
-    document.getElementById('pFatherName').innerText = document.getElementById('fatherName').value;
-    document.getElementById('pMotherName').innerText = document.getElementById('motherName').value;
-    document.getElementById('pPhone').innerText = document.getElementById('phone').value;
-    document.getElementById('pAddress').innerText = document.getElementById('address').value;
-    document.getElementById('pRegFee').innerText = regFeeVal;
-    document.getElementById('pAdmFee').innerText = admFeeVal;
-    document.getElementById('pTotalFee').innerText = totalFeeVal;
+    document.getElementById('idNo').innerText = randomId;
+    document.getElementById('idName').innerText = document.getElementById('studentName').value;
+    document.getElementById('idClass').innerText = document.getElementById('classSelect').value;
+    document.getElementById('idDob').innerText = document.getElementById('dob').value;
+    document.getElementById('idFather').innerText = document.getElementById('fatherName').value;
+    document.getElementById('idPhone').innerText = document.getElementById('phone').value;
 
-    // Show Preview Section
     document.getElementById('formBox').style.display = 'none';
-    document.getElementById('previewBox').style.display = 'block';
+    document.getElementById('idCardContainer').style.display = 'block';
 });
-
-// Back to Edit Form
-function backToForm() {
-    document.getElementById('previewBox').style.display = 'none';
-    document.getElementById('formBox').style.display = 'block';
-}
-
-// Final Submit & Move to Receipt
-function finalSubmit() {
-    var randomAppNo = 'NAPS-' + Math.floor(100000 + Math.random() * 900000);
-    var today = new Date().toLocaleDateString('en-IN');
-
-    document.getElementById('rAppNo').innerText = randomAppNo;
-    document.getElementById('rDate').innerText = today;
-    document.getElementById('rStudentName').innerText = document.getElementById('studentName').value;
-    document.getElementById('rDob').innerText = document.getElementById('dob').value;
-    document.getElementById('rGender').innerText = document.getElementById('gender').value;
-    document.getElementById('rCaste').innerText = document.getElementById('caste').value;
-    document.getElementById('rAadhar').innerText = document.getElementById('aadhar').value;
-    document.getElementById('rClass').innerText = document.getElementById('classSelect').value;
-    document.getElementById('rFatherName').innerText = document.getElementById('fatherName').value;
-    document.getElementById('rMotherName').innerText = document.getElementById('motherName').value;
-    document.getElementById('rPhone').innerText = document.getElementById('phone').value;
-    document.getElementById('rAddress').innerText = document.getElementById('address').value;
-    document.getElementById('rRegFee').innerText = document.getElementById('pRegFee').innerText;
-    document.getElementById('rAdmFee').innerText = document.getElementById('pAdmFee').innerText;
-    document.getElementById('rTotalFee').innerText = document.getElementById('pTotalFee').innerText;
-
-    document.getElementById('previewBox').style.display = 'none';
-    document.getElementById('receiptBox').style.display = 'block';
-}
 </script>
 
 </body>
