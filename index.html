@@ -17,7 +17,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto;
             background: #ffffff;
             padding: 30px;
@@ -39,6 +39,14 @@
             color: #666;
             font-size: 14px;
             margin-top: 5px;
+        }
+        .section-title {
+            background: #e9ecef;
+            padding: 8px 12px;
+            font-weight: bold;
+            color: #004085;
+            margin: 20px 0 15px 0;
+            border-left: 4px solid #004085;
         }
         .form-group {
             margin-bottom: 18px;
@@ -97,20 +105,34 @@
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
+        .receipt-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .student-photo-preview {
+            width: 110px;
+            height: 130px;
+            border: 2px solid #333;
+            object-fit: cover;
+            background: #e9ecef;
+            display: block;
+        }
         .receipt-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
         .receipt-table td {
-            padding: 10px;
+            padding: 8px 10px;
             border-bottom: 1px solid #ddd;
-            font-size: 15px;
+            font-size: 14px;
         }
         .receipt-table td.title {
             font-weight: bold;
             color: #004085;
-            width: 40%;
+            width: 35%;
         }
         .status-badge {
             background: #28a745;
@@ -148,6 +170,11 @@
             .row {
                 flex-direction: column;
             }
+            .receipt-top {
+                flex-direction: column-reverse;
+                align-items: center;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -162,6 +189,8 @@
         </div>
 
         <form id="admissionForm">
+            <div class="section-title">1. Student Information (छात्र की जानकारी)</div>
+            
             <div class="form-group">
                 <label for="studentName">Student's Full Name (छात्र का पूरा नाम) *</label>
                 <input type="text" id="studentName" required>
@@ -185,6 +214,24 @@
 
             <div class="row">
                 <div class="col form-group">
+                    <label for="caste">Caste Category (वर्ग/जाति) *</label>
+                    <select id="caste" required>
+                        <option value="">Select Category</option>
+                        <option value="General">General</option>
+                        <option value="OBC">OBC</option>
+                        <option value="SC">SC</option>
+                        <option value="ST">ST</option>
+                        <option value="EWS">EWS</option>
+                    </select>
+                </div>
+                <div class="col form-group">
+                    <label for="aadhar">Aadhaar Number (आधार कार्ड नंबर) *</label>
+                    <input type="text" id="aadhar" maxlength="12" pattern="[0-9]{12}" placeholder="12 digit Aadhaar" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group">
                     <label for="classSelect">Admission Class (कक्षा) *</label>
                     <select id="classSelect" required>
                         <option value="">Select Class</option>
@@ -199,10 +246,12 @@
                     </select>
                 </div>
                 <div class="col form-group">
-                    <label for="phone">Contact Number (मोबाइल नंबर) *</label>
-                    <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10 digits" required>
+                    <label for="photoInput">Student Photo (छात्र की फोटो) *</label>
+                    <input type="file" id="photoInput" accept="image/*" required>
                 </div>
             </div>
+
+            <div class="section-title">2. Parent / Guardian Information (अभिभावक की जानकारी)</div>
 
             <div class="form-group">
                 <label for="fatherName">Father's Name (पिता का नाम) *</label>
@@ -214,9 +263,28 @@
                 <input type="text" id="motherName" required>
             </div>
 
+            <div class="row">
+                <div class="col form-group">
+                    <label for="phone">Contact Number (मोबाइल नंबर) *</label>
+                    <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10 digits" required>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="address">Full Address (पूरा पता) *</label>
-                <textarea id="address" rows="3" required></textarea>
+                <textarea id="address" rows="2" required></textarea>
+            </div>
+
+            <div class="section-title">3. Fee Details (शुल्क का विवरण)</div>
+            <div class="row">
+                <div class="col form-group">
+                    <label for="regFee">Registration Fee (₹)</label>
+                    <input type="number" id="regFee" value="100" placeholder="100">
+                </div>
+                <div class="col form-group">
+                    <label for="admFee">Admission Fee (₹)</label>
+                    <input type="number" id="admFee" value="500" placeholder="500">
+                </div>
             </div>
 
             <button type="submit">Submit & Generate Receipt</button>
@@ -228,18 +296,20 @@
         <div class="receipt-header">
             <h2>NEW APPREHENSIVE PUBLIC SCHOOL</h2>
             <p>Baruna, Buxar, Bihar</p>
-            <h3 style="margin-top: 10px; color: #004085;">ADMISSION ACKNOWLEDGEMENT RECEIPT</h3>
+            <h3 style="margin-top: 8px; color: #004085;">ADMISSION ACKNOWLEDGEMENT RECEIPT</h3>
+        </div>
+
+        <div class="receipt-top">
+            <div style="flex: 1;">
+                <p><strong>Application No:</strong> <span id="rAppNo"></span></p>
+                <p><strong>Date:</strong> <span id="rDate"></span></p>
+            </div>
+            <div>
+                <img id="rPhoto" class="student-photo-preview" src="" alt="Student Photo">
+            </div>
         </div>
 
         <table class="receipt-table">
-            <tr>
-                <td class="title">Application No:</td>
-                <td><strong id="rAppNo"></strong></td>
-            </tr>
-            <tr>
-                <td class="title">Submission Date:</td>
-                <td id="rDate"></td>
-            </tr>
             <tr>
                 <td class="title">Student Name:</td>
                 <td id="rStudentName"></td>
@@ -249,11 +319,15 @@
                 <td id="rDob"></td>
             </tr>
             <tr>
-                <td class="title">Gender:</td>
-                <td id="rGender"></td>
+                <td class="title">Gender / Caste:</td>
+                <td><span id="rGender"></span> / <span id="rCaste"></span></td>
             </tr>
             <tr>
-                <td class="title">Applying For Class:</td>
+                <td class="title">Aadhaar Number:</td>
+                <td id="rAadhar"></td>
+            </tr>
+            <tr>
+                <td class="title">Class Applied:</td>
                 <td id="rClass"></td>
             </tr>
             <tr>
@@ -273,13 +347,25 @@
                 <td id="rAddress"></td>
             </tr>
             <tr>
-                <td class="title">Status:</td>
+                <td class="title">Registration Fee:</td>
+                <td>₹<span id="rRegFee">0</span></td>
+            </tr>
+            <tr>
+                <td class="title">Admission Fee:</td>
+                <td>₹<span id="rAdmFee">0</span></td>
+            </tr>
+            <tr>
+                <td class="title">Total Payable Fee:</td>
+                <td><strong>₹<span id="rTotalFee">0</span></strong></td>
+            </tr>
+            <tr>
+                <td class="title">Form Status:</td>
                 <td><span class="status-badge">Submitted Online</span></td>
             </tr>
         </table>
 
-        <div style="text-align: center; margin-top: 20px; font-size: 13px; color: #555;">
-            <p>Please keep a copy of this receipt for school document verification.</p>
+        <div style="text-align: center; margin-top: 15px; font-size: 13px; color: #555;">
+            <p>Please bring a copy of this receipt along with original documents to the school office.</p>
         </div>
 
         <button class="print-btn no-print" onclick="window.print()">Print / Download Receipt (PDF)</button>
@@ -290,23 +376,42 @@
 document.getElementById('admissionForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Generate Random Application Number
     var randomAppNo = 'NAPS-' + Math.floor(100000 + Math.random() * 900000);
     var today = new Date().toLocaleDateString('en-IN');
 
-    // Set Values in Receipt
+    // Values calculation
+    var regFeeVal = parseFloat(document.getElementById('regFee').value) || 0;
+    var admFeeVal = parseFloat(document.getElementById('admFee').value) || 0;
+    var totalFeeVal = regFeeVal + admFeeVal;
+
+    // Handle Photo Upload
+    var photoFile = document.getElementById('photoInput').files[0];
+    if (photoFile) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('rPhoto').src = e.target.result;
+        }
+        reader.readAsDataURL(photoFile);
+    }
+
+    // Assign text content
     document.getElementById('rAppNo').innerText = randomAppNo;
     document.getElementById('rDate').innerText = today;
     document.getElementById('rStudentName').innerText = document.getElementById('studentName').value;
     document.getElementById('rDob').innerText = document.getElementById('dob').value;
     document.getElementById('rGender').innerText = document.getElementById('gender').value;
+    document.getElementById('rCaste').innerText = document.getElementById('caste').value;
+    document.getElementById('rAadhar').innerText = document.getElementById('aadhar').value;
     document.getElementById('rClass').innerText = document.getElementById('classSelect').value;
     document.getElementById('rFatherName').innerText = document.getElementById('fatherName').value;
     document.getElementById('rMotherName').innerText = document.getElementById('motherName').value;
     document.getElementById('rPhone').innerText = document.getElementById('phone').value;
     document.getElementById('rAddress').innerText = document.getElementById('address').value;
+    document.getElementById('rRegFee').innerText = regFeeVal;
+    document.getElementById('rAdmFee').innerText = admFeeVal;
+    document.getElementById('rTotalFee').innerText = totalFeeVal;
 
-    // Hide Form and Show Receipt
+    // Hide Form & Show Receipt
     document.getElementById('formBox').style.display = 'none';
     document.getElementById('receiptBox').style.display = 'block';
 });
