@@ -38,9 +38,10 @@
             padding: 20px;
             border-radius: 10px;
         }
-        .logo-svg {
-            width: 75px;
-            height: 75px;
+        .school-logo {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
             flex-shrink: 0;
         }
         .header-text {
@@ -111,8 +112,13 @@
         .col {
             flex: 1;
         }
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
         .btn-main {
-            width: 100%;
+            flex: 1;
             background-color: #004085;
             color: white;
             padding: 12px;
@@ -121,10 +127,62 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
+            text-align: center;
         }
         .btn-main:hover {
             background-color: #002752;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .btn-success {
+            background-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        /* PREVIEW STYLES */
+        #previewBox {
+            display: none;
+            border: 2px solid #004085;
+            padding: 25px;
+            border-radius: 8px;
+            background: #fff;
+        }
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .preview-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        .preview-table td.label {
+            font-weight: bold;
+            color: #004085;
+            width: 35%;
+        }
+        .img-preview-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .img-preview-box {
+            text-align: center;
+        }
+        .img-preview-box img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         /* DUAL RECEIPT STYLES */
@@ -191,7 +249,7 @@
                 flex-direction: column;
                 gap: 10px;
             }
-            .row {
+            .row, .btn-container {
                 flex-direction: column;
             }
         }
@@ -220,12 +278,7 @@
     <!-- ADMISSION FORM -->
     <div id="formBox">
         <div class="school-header">
-            <svg class="logo-svg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="48" fill="#004085" stroke="#d9534f" stroke-width="3"/>
-                <circle cx="50" cy="50" r="40" fill="#ffffff"/>
-                <path d="M50 22 L75 35 L50 48 L25 35 Z" fill="#004085"/>
-                <path d="M35 42 L35 58 C35 63 65 63 65 58 L65 42" fill="none" stroke="#004085" stroke-width="3"/>
-            </svg>
+            <img src="logo.png" alt="School Logo" class="school-logo">
             <div class="header-text">
                 <h1>New Apprehensive Public School</h1>
                 <p class="address">📍 Baruna, Buxar, 802119 Bihar</p>
@@ -354,8 +407,44 @@
                 <input type="text" id="totalFee" readonly style="background: #e9ecef; font-weight: bold; color: #004085;" value="₹ 0">
             </div>
 
-            <button type="submit" class="btn-main">Submit Application & Print Receipts</button>
+            <button type="button" onclick="showPreview()" class="btn-main">🔍 Preview Application</button>
         </form>
+    </div>
+
+    <!-- PREVIEW SECTION -->
+    <div id="previewBox">
+        <h2 style="text-align: center; color: #004085; border-bottom: 2px solid #004085; padding-bottom: 10px;">Application Preview</h2>
+        
+        <div class="img-preview-row">
+            <div class="img-preview-box">
+                <img id="pPhoto" src="" alt="Student Photo">
+                <p style="font-size: 11px;">Student Photo</p>
+            </div>
+            <div class="img-preview-box">
+                <img id="pSign" src="" alt="Signature">
+                <p style="font-size: 11px;">Signature</p>
+            </div>
+        </div>
+
+        <table class="preview-table">
+            <tr><td class="label">Admission Date:</td><td id="pDate"></td></tr>
+            <tr><td class="label">Student Name:</td><td id="pName"></td></tr>
+            <tr><td class="label">Aadhaar Number:</td><td id="pAadhar"></td></tr>
+            <tr><td class="label">Date of Birth:</td><td id="pDob"></td></tr>
+            <tr><td class="label">Gender / Class:</td><td><span id="pGender"></span> / <span id="pClass"></span></td></tr>
+            <tr><td class="label">Father's Name & Occ:</td><td><span id="pFather"></span> (<span id="pOcc"></span>)</td></tr>
+            <tr><td class="label">Father's Qualification:</td><td id="pFQual"></td></tr>
+            <tr><td class="label">Mother's Name & Qual:</td><td><span id="pMother"></span> (<span id="pMQual"></span>)</td></tr>
+            <tr><td class="label">Mobile Number:</td><td id="pPhone"></td></tr>
+            <tr><td class="label">Address:</td><td id="pAddress"></td></tr>
+            <tr><td class="label">Fee Breakdown:</td><td>Reg Fee: ₹<span id="pReg">0</span> | Adm Fee: ₹<span id="pAdm">0</span></td></tr>
+            <tr style="font-weight: bold; color: #004085;"><td class="label">Total Fee:</td><td>₹<span id="pTotal">0</span>/-</td></tr>
+        </table>
+
+        <div class="btn-container">
+            <button type="button" onclick="editForm()" class="btn-main btn-secondary">✏️ Edit Form</button>
+            <button type="button" onclick="finalSubmit()" class="btn-main btn-success">✔️ Final Submit & Generate Receipt</button>
+        </div>
     </div>
 
     <!-- DUAL RECEIPT SECTION -->
@@ -410,75 +499,4 @@
                     <tr style="background: #e9ecef; font-weight: bold;"><td class="label">Total Paid Fee:</td><td>₹<span class="rTotal">0</span>/-</td></tr>
                 </table>
             </div>
-            <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: flex-end;">
-                <div><span style="font-size: 11px; border-top: 1px solid #333; display: inline-block; padding-top: 2px;">Applicant's Signature</span></div>
-                <div><span style="font-size: 11px; border-top: 1px solid #333; display: inline-block; padding-top: 2px;">Authorized Signatory</span></div>
-            </div>
-        </div>
-
-        <button onclick="window.print()" class="btn-main no-print" style="background-color: #28a745; margin-top: 10px;">Print Both Receipts</button>
-    </div>
-</div>
-
-<script>
-// Auto set today date
-document.getElementById('admissionDate').valueAsDate = new Date();
-
-// Calculate total fee dynamically
-function calculateTotal() {
-    var reg = parseFloat(document.getElementById('regFee').value) || 0;
-    var adm = parseFloat(document.getElementById('admFee').value) || 0;
-    var total = reg + adm;
-    document.getElementById('totalFee').value = '₹ ' + total;
-}
-
-document.getElementById('admissionForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    var appNo = 'NAPS-' + Math.floor(10000 + Math.random() * 90000);
-    var regVal = parseFloat(document.getElementById('regFee').value) || 0;
-    var admVal = parseFloat(document.getElementById('admFee').value) || 0;
-    var totalVal = regVal + admVal;
-
-    // Fill details in both receipts
-    var appNos = document.querySelectorAll('.rAppNo');
-    var admDates = document.querySelectorAll('.rAdmDate');
-    var names = document.querySelectorAll('.rName');
-    var aadhars = document.querySelectorAll('.rAadhar');
-    var classes = document.querySelectorAll('.rClass');
-    var dobs = document.querySelectorAll('.rDob');
-    var fathers = document.querySelectorAll('.rFather');
-    var occs = document.querySelectorAll('.rOcc');
-    var mothers = document.querySelectorAll('.rMother');
-    var fQuals = document.querySelectorAll('.rFQual');
-    var mQuals = document.querySelectorAll('.rMQual');
-    var phones = document.querySelectorAll('.rPhone');
-    var addresses = document.querySelectorAll('.rAddress');
-    var regs = document.querySelectorAll('.rReg');
-    var adms = document.querySelectorAll('.rAdm');
-    var totals = document.querySelectorAll('.rTotal');
-
-    appNos.forEach(e => e.innerText = appNo);
-    admDates.forEach(e => e.innerText = document.getElementById('admissionDate').value);
-    names.forEach(e => e.innerText = document.getElementById('studentName').value);
-    aadhars.forEach(e => e.innerText = document.getElementById('aadharNo').value);
-    classes.forEach(e => e.innerText = document.getElementById('classSelect').value);
-    dobs.forEach(e => e.innerText = document.getElementById('dob').value);
-    fathers.forEach(e => e.innerText = document.getElementById('fatherName').value);
-    occs.forEach(e => e.innerText = document.getElementById('fatherOcc').value);
-    mothers.forEach(e => e.innerText = document.getElementById('motherName').value);
-    fQuals.forEach(e => e.innerText = document.getElementById('fatherQual').value || 'N/A');
-    mQuals.forEach(e => e.innerText = document.getElementById('motherQual').value || 'N/A');
-    phones.forEach(e => e.innerText = document.getElementById('phone').value);
-    addresses.forEach(e => e.innerText = document.getElementById('address').value);
-    regs.forEach(e => e.innerText = regVal);
-    adms.forEach(e => e.innerText = admVal);
-    totals.forEach(e => e.innerText = totalVal);
-
-    document.getElementById('formBox').style.display = 'none';
-    document.getElementById('receiptContainer').style.display = 'block';
-});
-</script>
-
-</body>
-</html>
+            <div style="margin-top: 20px; display: flex; justify-c
