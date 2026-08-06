@@ -332,3 +332,154 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Online Admission Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+    .container { max-width: 700px; background: #fff; padding: 25px; border-radius: 10px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #1a73e8; margin-bottom: 20px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
+    input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+    .inline-group { display: flex; gap: 10px; }
+    .btn { background: #1a73e8; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; }
+    .btn:hover { background: #1557b0; }
+    .btn-success { background: #28a745; }
+    .hidden { display: none; }
+    
+    /* AI Assistant Box */
+    .ai-box { background: #e8f0fe; border-left: 5px solid #1a73e8; padding: 12px; margin-bottom: 20px; border-radius: 4px; }
+    .ai-box h4 { margin: 0 0 5px 0; color: #1a73e8; }
+    .ai-chat-input { display: flex; gap: 5px; margin-top: 10px; }
+
+    @media print {
+      .btn, .ai-box, .otp-section, #sendOtpBtn { display: none !important; }
+      body { background: #fff; }
+      .container { box-shadow: none; border: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Online Admission Form (AI Enabled)</h2>
+
+  <!-- AI Helper Section -->
+  <div class="ai-box">
+    <h4>🤖 AI Admission Assistant</h4>
+    <p style="font-size: 13px; margin: 0;">Admission ya course se judha koi bhi sawal yahan poochein:</p>
+    <div class="ai-chat-input">
+      <input type="text" id="aiQuery" placeholder="Jaise: B.Sc ke liye kya eligibility chahiye?">
+      <button type="button" class="btn" onclick="askAI()">Poochhein</button>
+    </div>
+    <p id="aiReply" style="font-size: 13px; font-weight: bold; color: #222; margin-top: 8px;"></p>
+  </div>
+
+  <form id="studentForm" onsubmit="event.preventDefault(); submitForm();">
+    <div class="form-group">
+      <label for="fullName">Full Name (Pura Naam):</label>
+      <input type="text" id="fullName" required placeholder="Student name">
+    </div>
+
+    <div class="form-group">
+      <label for="course">Select Course:</label>
+      <select id="course" required>
+        <option value="">-- Select Course --</option>
+        <option value="B.A">B.A</option>
+        <option value="B.Sc">B.Sc</option>
+        <option value="B.Com">B.Com</option>
+      </select>
+    </div>
+
+    <!-- Mobile Verification -->
+    <div class="form-group">
+      <label for="mobile">Mobile Number (WhatsApp Enabled):</label>
+      <div class="inline-group">
+        <input type="tel" id="mobile" maxlength="10" required placeholder="10-digit mobile number">
+        <button type="button" class="btn" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+      </div>
+    </div>
+
+    <div class="form-group hidden" id="otpSection">
+      <label for="otp">Enter 4-Digit OTP:</label>
+      <div class="inline-group">
+        <input type="text" id="otp" maxlength="4" placeholder="OTP daalein">
+        <button type="button" class="btn btn-success" onclick="verifyOTP()">Verify OTP</button>
+      </div>
+      <small id="otpStatus" style="color: green;"></small>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" id="submitBtn" class="btn btn-success" disabled style="width: 100%;">Submit & Send to WhatsApp</button>
+    </div>
+  </form>
+
+  <button type="button" class="btn" onclick="window.print()" style="width: 100%; background: #5f6368;">Print Form</button>
+</div>
+
+<script>
+  let generatedOTP = null;
+  let isVerified = false;
+
+  // AI Assistant Chatbot Logic (Gemini API Integration)
+  async function askAI() {
+    const query = document.getElementById('aiQuery').value;
+    const replyBox = document.getElementById('aiReply');
+    if(!query) return;
+
+    replyBox.innerText = "AI soch raha hai...";
+
+    // Yahan aap Gemini API Key integrate kar sakte hain
+    const apiKey = "YOUR_GEMINI_API_KEY"; 
+    
+    try {
+      const response = await fetch(https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: Aap ek admission counselor hain. Student ka sawal hai: "${query}". Chota aur saral jawab Hindi/Hinglish me dein. }] }]
+        })
+      });
+      const data = await response.json();
+      const answer = data.candidates[0].content.parts[0].text;
+      replyBox.innerText = "AI Jawab: " + answer;
+    } catch(err) {
+      replyBox.innerText = "AI Response Demo: Admission ke liye Class 12th me minimum 50% marks hone chahiye.";
+    }
+  }
+
+  function sendOTP() {
+    const mobile = document.getElementById('mobile').value;
+    if (mobile.length !== 10) { alert("Sahi mobile number daalein."); return; }
+    generatedOTP = Math.floor(1000 + Math.random() * 9000);
+    alert("Demo OTP: " + generatedOTP);
+    document.getElementById('otpSection').classList.remove('hidden');
+  }
+
+  function verifyOTP() {
+    if (document.getElementById('otp').value == generatedOTP) {
+      isVerified = true;
+      document.getElementById('otpStatus').innerText = "✓ Mobile Verified!";
+      document.getElementById('submitBtn').disabled = false;
+    } else {
+      alert("Galat OTP!");
+    }
+  }
+
+  function submitForm() {
+    if(!isVerified) return;
+    const name = document.getElementById('fullName').value;
+    const course = document.getElementById('course').value;
+    const mobile = document.getElementById('mobile').value;
+
+    const msg = *Admission Details*%0AName: ${name}%0ACourse: ${course}%0AMobile: ${mobile};
+    window.open(https://wa.me/91${mobile}?text=${msg}, '_blank');
+  }
+</script>
+
+</body>
+</html>
