@@ -38,7 +38,7 @@
       border: 1px solid #e2e8f0;
     }
 
-    /* Header with Logos on Both Sides */
+    /* Header with Ashoka Stambh Logos */
     .header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
@@ -62,12 +62,13 @@
       flex-shrink: 0;
       overflow: hidden;
       border: 2px solid #ffffff;
+      padding: 5px;
     }
 
     .header-logo img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     .header-center {
@@ -290,10 +291,10 @@
 <body>
 
   <div class="form-container">
-    <!-- Header with 2 Logos -->
+    <!-- Header with Ashoka Stambh Logos -->
     <div class="header">
       <div class="header-logo">
-        <img src="https://via.placeholder.com/80?text=LOGO" id="leftLogoPreview" alt="School Logo Left">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" id="leftLogoPreview" alt="Ashoka Stambh Left">
       </div>
       <div class="header-center">
         <h1>New Apprehensive Public School</h1>
@@ -301,13 +302,13 @@
         <p class="contact-info">Contact: +91 9546827830, +91 9304034138</p>
       </div>
       <div class="header-logo">
-        <img src="https://via.placeholder.com/80?text=LOGO" id="rightLogoPreview" alt="School Logo Right">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" id="rightLogoPreview" alt="Ashoka Stambh Right">
       </div>
     </div>
 
     <form id="admissionForm" class="form-body">
       
-      <!-- Registration Metadata (Now Editable) -->
+      <!-- Registration Metadata -->
       <div class="grid-row">
         <div class="form-group">
           <label>Application No.</label>
@@ -331,6 +332,10 @@
           <input type="text" id="studentName" required placeholder="Enter student full name">
         </div>
         <div class="form-group">
+          <label>Student Aadhaar No. *</label>
+          <input type="text" id="studentAadhaar" required pattern="[0-9]{12}" maxlength="12" placeholder="12-digit Aadhaar Number">
+        </div>
+        <div class="form-group">
           <label>Date of Birth *</label>
           <input type="date" id="dob" required>
         </div>
@@ -346,8 +351,12 @@
             <option value="3rd">Class 3</option>
             <option value="4th">Class 4</option>
             <option value="5th">Class 5</option>
-          
-         </select> aadhar no.
+            <option value="6th">Class 6</option>
+            <option value="7th">Class 7</option>
+            <option value="8th">Class 8</option>
+            <option value="9th">Class 9</option>
+            <option value="10th">Class 10</option>
+          </select>
         </div>
       </div>
 
@@ -504,13 +513,13 @@
       <!-- PAGE 1: ADMISSION FORM DETAILS -->
       <div id="printPage1">
         <div class="print-header">
-          <img src="https://via.placeholder.com/80?text=LOGO" class="print-logo" alt="Logo Left">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" class="print-logo" alt="Ashoka Stambh Left">
           <div class="print-header-text">
             <h2>NEW APPREHENSIVE PUBLIC SCHOOL</h2>
             <p>Baruna, Post - Baruna, Buxar, Bihar - 802119</p>
             <p>Contact: 9546827830, 9304034138 | <strong>ADMISSION APPLICATION FORM</strong></p>
           </div>
-          <img src="https://via.placeholder.com/80?text=LOGO" class="print-logo" alt="Logo Right">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" class="print-logo" alt="Ashoka Stambh Right">
         </div>
 
         <table class="print-table">
@@ -527,8 +536,10 @@
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
           <table class="print-table" style="flex: 1; margin-right: 15px;">
             <tr>
-              <th width="30%">Student Name</th>
-              <td id="p_studentName" colspan="3"></td>
+              <th width="25%">Student Name</th>
+              <td id="p_studentName"></td>
+              <th width="25%">Aadhaar No.</th>
+              <td id="p_studentAadhaar"></td>
             </tr>
             <tr>
               <th>Date of Birth</th>
@@ -620,13 +631,13 @@
       <div class="page-break"></div>
       <div id="printPage2" style="margin-top: 20px;">
         <div class="print-header">
-          <img src="https://via.placeholder.com/80?text=LOGO" class="print-logo" alt="Logo Left">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" class="print-logo" alt="Ashoka Stambh Left">
           <div class="print-header-text">
             <h2>NEW APPREHENSIVE PUBLIC SCHOOL</h2>
             <p>Baruna, Post - Baruna, Buxar, Bihar - 802119</p>
             <p><strong>ADMISSION FEE BREAKDOWN & RECEIPT</strong></p>
           </div>
-          <img src="https://via.placeholder.com/80?text=LOGO" class="print-logo" alt="Logo Right">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" class="print-logo" alt="Ashoka Stambh Right">
         </div>
 
         <table class="print-table">
@@ -747,6 +758,7 @@
       document.getElementById('p_date').innerText = document.getElementById('currDate').value || 'N/A';
 
       document.getElementById('p_studentName').innerText = document.getElementById('studentName').value;
+      document.getElementById('p_studentAadhaar').innerText = document.getElementById('studentAadhaar').value || 'N/A';
       document.getElementById('p_dob').innerText = document.getElementById('dob').value;
       document.getElementById('p_class').innerText = document.getElementById('studentClass').value;
       document.getElementById('p_rollNo').innerText = document.getElementById('rollNo').value || 'N/A';
