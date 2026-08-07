@@ -1,294 +1,440 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Admission Form - New Apprehensive Public School</title>
-    <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f7f6; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .header { text-align: center; border-bottom: 2px solid #003366; padding-bottom: 15px; margin-bottom: 20px; }
-        .header h1 { color: #003366; margin: 5px 0; font-size: 26px; text-transform: uppercase; }
-        .header p { margin: 4px 0; color: #555; font-size: 14px; }
-        .section-title { background: #003366; color: white; padding: 8px 12px; font-weight: bold; margin-top: 25px; margin-bottom: 15px; border-radius: 4px; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group label { font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #333; }
-        .form-group input, .form-group select, .form-group textarea { padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        .form-group input[readonly] { background-color: #e9ecef; font-weight: bold; }
-        .btn-container { text-align: center; margin-top: 30px; display: flex; gap: 10px; justify-content: center; }
-        .btn { padding: 10px 25px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 15px; color: white; }
-        .btn-preview { background-color: #17a2b8; }
-        .btn-submit { background-color: #28a745; }
-        .btn-print { background-color: #0056b3; }
-        
-        /* Modal Style for Preview */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); overflow: auto; }
-        .modal-content { background: white; margin: 5% auto; padding: 25px; width: 80%; max-width: 700px; border-radius: 8px; }
-        .close { float: right; font-size: 24px; font-weight: bold; cursor: pointer; }
-        
-        @media print {
-            .btn-container, .close { display: none !important; }
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; border: none; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ऑनलाइन एडमिशन फ़ॉर्म | Nursery to Class 5</title>
+  <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #2b6cb0;
+      --accent-color: #2f855a;
+      --bg-color: #f7fafc;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+      color: #2d3748;
+    }
+
+    .form-container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-top: 6px solid var(--primary-color);
+    }
+
+    .school-header {
+      text-align: center;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+    }
+
+    .school-header h1 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 24pt;
+      text-transform: uppercase;
+    }
+
+    .school-header p {
+      margin: 5px 0 0 0;
+      color: #718096;
+      font-size: 11pt;
+    }
+
+    .section-title {
+      background-color: #ebf8ff;
+      color: var(--secondary-color);
+      padding: 8px 12px;
+      font-weight: bold;
+      font-size: 13pt;
+      border-left: 4px solid var(--secondary-color);
+      margin: 20px 0 15px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      font-size: 10.5pt;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #4a5568;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 8px 12px;
+      border: 1px solid #cbd5e0;
+      border-radius: 5px;
+      font-size: 11pt;
+    }
+
+    .photo-upload-box {
+      border: 2px dashed #cbd5e0;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      background: #faf5ff;
+    }
+
+    .photo-preview {
+      width: 110px;
+      height: 135px;
+      border: 1px solid #cbd5e0;
+      margin: 10px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #edf2f7;
+      object-fit: cover;
+    }
+
+    .fee-card {
+      background: #f0fff4;
+      border: 1px solid #c6f6d5;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .fee-details {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 11pt;
+    }
+
+    .total-fee {
+      border-top: 1px solid #9ae6b4;
+      padding-top: 8px;
+      font-weight: bold;
+      color: var(--accent-color);
+      font-size: 12pt;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 11pt;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-preview { background-color: #3182ce; color: white; }
+    .btn-print { background-color: #38a169; color: white; }
+    .btn-reset { background-color: #e53e3e; color: white; }
+
+    .btn:hover { opacity: 0.9; }
+
+    /* Modal / Preview Style */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 8px;
+    }
+
+    /* Print Styles */
+    @media print {
+      body { background: white; padding: 0; }
+      .form-container, .btn-group, .modal-buttons { display: none !important; }
+      #printablePreview { display: block !important; }
+      .modal { position: static; background: none; }
+      .modal-content { width: 100%; max-width: 100%; padding: 0; border: none; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="container" id="printableArea">
-    <!-- Header Section (Without Logo) -->
-    <div class="header">
-        <h1>New Apprehensive Public School</h1>
-        <p><strong>Address:</strong> Baruna, Buxar, Bihar - 802119</p>
-        <p><strong>Contact:</strong> +91 9546427830, +91 9304034138</p>
-        <h3 style="margin-top: 12px; color: #d9534f;">ONLINE ADMISSION FORM</h3>
+  <div class="form-container">
+    <div class="school-header">
+      <h1>EXCELLENT INTERNATIONAL SCHOOL</h1>
+      <p>Address: Baruna | Mobile: +91 7061498865 | Session: 2026-2027</p>
+      <h3 style="margin-top: 10px; color: #2b6cb0;">ONLINE ADMISSION FORM (NURSERY TO CLASS 5)</h3>
     </div>
 
     <form id="admissionForm">
-        <!-- Office & Basic Details -->
-        <div class="section-title">1. Office & Academic Details</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Admission No.</label>
-                <input type="text" id="admissionNo" placeholder="Auto/Office use">
-            </div>
-            <div class="form-group">
-                <label>Registration No.</label>
-                <input type="text" id="registrationNo" placeholder="Auto/Office use">
-            </div>
-            <div class="form-group">
-                <label>Date of Admission *</label>
-                <input type="date" id="admissionDate" required>
-            </div>
-            <div class="form-group">
-                <label>Applying for Class *</label>
-                <select id="studentClass" required>
-                    <option value="">Select Class</option>
-                    <option value="Nursery">Nursery</option>
-                    <option value="LKG">LKG</option>
-                    <option value="UKG">UKG</option>
-                    <option value="Class 1">Class 1</option>
-                    <option value="Class 2">Class 2</option>
-                    <option value="Class 3">Class 3</option>
-                    <option value="Class 4">Class 4</option>
-                    <option value="Class 5">Class 5</option>
-                    <option value="Class 6">Class 6</option>
-                    <option value="Class 7">Class 7</option>
-                    <option value="Class 8">Class 8</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Roll No.</label>
-                <input type="text" id="rollNo">
-            </div>
+      
+      <!-- Photo & Class Section -->
+      <div class="grid-2">
+        <div>
+          <div class="form-group">
+            <label>प्रवेश के लिए कक्षा (Select Class) *</label>
+            <select id="applyClass" onchange="updateFeeDetails()" required>
+              <option value="">-- कक्षा चुनें --</option>
+              <option value="Nursery">Nursery</option>
+              <option value="LKG">LKG</option>
+              <option value="UKG">UKG</option>
+              <option value="Class 1">Class 1</option>
+              <option value="Class 2">Class 2</option>
+              <option value="Class 3">Class 3</option>
+              <option value="Class 4">Class 4</option>
+              <option value="Class 5">Class 5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>छात्र/छात्रा का पूरा नाम (Student's Full Name) *</label>
+            <input type="text" id="studentName" placeholder="Enter full name" required>
+          </div>
         </div>
 
-        <!-- Student Details -->
-        <div class="section-title">2. Student Details</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Full Name of Student *</label>
-                <input type="text" id="studentName" required>
-            </div>
-            <div class="form-group">
-                <label>Date of Birth *</label>
-                <input type="date" id="dob" required>
-            </div>
-            <div class="form-group">
-                <label>Nationality</label>
-                <input type="text" id="nationality" value="Indian">
-            </div>
-            <div class="form-group">
-                <label>Caste Category</label>
-                <select id="caste">
-                    <option value="General">General</option>
-                    <option value="OBC">OBC</option>
-                    <option value="SC">SC</option>
-                    <option value="ST">ST</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Aadhaar Number *</label>
-                <input type="text" id="aadhaar" maxlength="12" placeholder="12-digit Aadhaar" required>
-            </div>
+        <div class="photo-upload-box">
+          <label>छात्र का पासपोर्ट साइज़ फ़ोटो *</label>
+          <input type="file" id="photoInput" accept="image/*" onchange="previewStudentPhoto(event)" required>
+          <img id="photoDisplay" class="photo-preview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><text x='20' y='55' fill='%23aaa'>PHOTO</text></svg>" alt="Photo Preview">
         </div>
+      </div>
 
-        <!-- Parents Details -->
-        <div class="section-title">3. Parents Information</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Father's Name *</label>
-                <input type="text" id="fatherName" required>
-            </div>
-            <div class="form-group">
-                <label>Father's Occupation</label>
-                <input type="text" id="fatherOccupation">
-            </div>
-            <div class="form-group">
-                <label>Father's Qualification</label>
-                <input type="text" id="fatherQualification">
-            </div>
-            <div class="form-group">
-                <label>Mother's Name *</label>
-                <input type="text" id="motherName" required>
-            </div>
-            <div class="form-group">
-                <label>Mother's Occupation</label>
-                <input type="text" id="motherOccupation">
-            </div>
-            <div class="form-group">
-                <label>Mother's Qualification</label>
-                <input type="text" id="motherQualification">
-            </div>
-            <div class="form-group" style="grid-column: span 2;">
-                <label>Full Address *</label>
-                <textarea id="address" rows="2" required></textarea>
-            </div>
+      <!-- Personal Information -->
+      <div class="section-title">1. व्यक्तिगत जानकारी (Personal Details)</div>
+      <div class="grid-3">
+        <div class="form-group">
+          <label>जन्म तिथि (Date of Birth) *</label>
+          <input type="date" id="dob" required>
         </div>
+        <div class="form-group">
+          <label>लिंग (Gender) *</label>
+          <select id="gender" required>
+            <option value="">-- चुनें --</option>
+            <option value="Male">बालक (Male)</option>
+            <option value="Female">बालिका (Female)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>धर्म (Religion)</label>
+          <input type="text" id="religion" placeholder="e.g. Hindu / Muslim">
+        </div>
+      </div>
 
-        <!-- Fee Structure Section -->
-        <div class="section-title">4. Fee Details (Automatic Calculation)</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Admission Fee (₹)</label>
-                <input type="number" class="fee-input" id="admissionFee" value="0" oninput="calculateTotal()">
-            </div>
-            <div class="form-group">
-                <label>Registration Fee (₹)</label>
-                <input type="number" class="fee-input" id="registrationFee" value="0" oninput="calculateTotal()">
-            </div>
-            <div class="form-group">
-                <label>Computer Lab Fee (₹)</label>
-                <input type="number" class="fee-input" id="computerFee" value="0" oninput="calculateTotal()">
-            </div>
-            <div class="form-group">
-                <label>Tie & Belt Fee (₹)</label>
-                <input type="number" class="fee-input" id="tieBeltFee" value="0" oninput="calculateTotal()">
-            </div>
-            <div class="form-group">
-                <label>Dress Fee (₹)</label>
-                <input type="number" class="fee-input" id="dressFee" value="0" oninput="calculateTotal()">
-            </div>
-            <div class="form-group">
-                <label>Books Fee (₹)</label>
-                <input type="number" class="fee-input" id="booksFee" value="0" oninput="calculateTotal()">
-            </div>
-            <div class="form-group" style="grid-column: span 2;">
-                <label style="color: #d9534f; font-size: 15px;">TOTAL AMOUNT (₹)</label>
-                <input type="number" id="totalAmount" value="0" readonly style="font-size: 18px; color: #003366;">
-            </div>
+      <!-- Parent Information -->
+      <div class="section-title">2. अभिभावक का विवरण (Parent's Details)</div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>पिता का नाम (Father's Name) *</label>
+          <input type="text" id="fatherName" required>
         </div>
+        <div class="form-group">
+          <label>माता का नाम (Mother's Name) *</label>
+          <input type="text" id="motherName" required>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>मोबाइल नंबर (Mobile No.) *</label>
+          <input type="tel" id="mobileNo" pattern="[0-9]{10}" placeholder="10 अंकों का नंबर" required>
+        </div>
+        <div class="form-group">
+          <label>अभिभावक का व्यवसाय (Occupation)</label>
+          <input type="text" id="occupation" placeholder="e.g. Business / Service">
+        </div>
+      </div>
 
-        <!-- Uploads -->
-        <div class="section-title">5. Document Uploads</div>
-        <div class="form-grid">
-            <div class="form-group">
-                <label>Upload Student Photo *</label>
-                <input type="file" id="studentPhoto" accept="image/*" required>
-            </div>
-            <div class="form-group">
-                <label>Upload Parent/Guardian Signature *</label>
-                <input type="file" id="signature" accept="image/*" required>
-            </div>
+      <!-- Address & Transport -->
+      <div class="section-title">3. पता एवं परिवहन (Address & Transport)</div>
+      <div class="form-group">
+        <label>पूरा पता (Full Address) *</label>
+        <textarea id="address" rows="2" placeholder="गांव/शहर, पोस्ट, थाना, जिला..." required></textarea>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>क्या स्कूल बस/वैन सुविधा चाहिए? (Transport Facility)</label>
+          <select id="transport" onchange="updateFeeDetails()">
+            <option value="No">नहीं (No)</option>
+            <option value="Yes">हाँ (Yes)</option>
+          </select>
         </div>
+        <div class="form-group">
+          <label>आधार कार्ड नंबर (Aadhaar No.)</label>
+          <input type="text" id="aadhaar" placeholder="Optional">
+        </div>
+      </div>
 
-        <!-- Buttons -->
-        <div class="btn-container">
-            <button type="button" class="btn btn-preview" onclick="openPreview()">Form Preview</button>
-            <button type="button" class="btn btn-submit" onclick="sendToWhatsApp()">Submit on WhatsApp</button>
-            <button type="button" class="btn btn-print" onclick="window.print()">Print Form</button>
+      <!-- Fee Details & Payment -->
+      <div class="section-title">4. शुल्क विवरण (Fee Structure & Payment)</div>
+      <div class="fee-card">
+        <div class="fee-details"><span>नामांकन शुल्क (Admission Fee):</span> <span id="admissionFee">₹0</span></div>
+        <div class="fee-details"><span>प्रथम माह का शिक्षण शुल्क (Monthly Fee):</span> <span id="monthlyFee">₹0</span></div>
+        <div class="fee-details"><span>परिवहन शुल्क (Transport Charges):</span> <span id="transportFee">₹0</span></div>
+        <div class="fee-details total-fee"><span>कुल देय राशि (Total Payable Amount):</span> <span id="totalFee">₹0</span></div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 15px;">
+        <div class="form-group">
+          <label>भुगतान का माध्यम (Payment Mode) *</label>
+          <select id="paymentMode" required>
+            <option value="Cash at School Counter">स्कूल काउंटर पर नकद (Cash)</option>
+            <option value="Online UPI / Scanner">ऑनलाइन (UPI / Google Pay / PhonePe)</option>
+          </select>
         </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="btn-group">
+        <button type="button" class="btn btn-preview" onclick="openPreview()">प्रिव्यू देखें (Preview Form)</button>
+        <button type="reset" class="btn btn-reset">रीसेट करें (Reset)</button>
+      </div>
+
     </form>
-</div>
+  </div>
 
-<!-- Preview Modal -->
-<div id="previewModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closePreview()">&times;</span>
-        <h2>Admission Form Preview</h2>
-        <hr>
-        <div id="previewData" style="line-height: 1.8;"></div>
-        <br>
-        <button class="btn btn-print" onclick="window.print()">Confirm & Print</button>
+  <!-- Preview Modal -->
+  <div id="previewModal" class="modal">
+    <div class="modal-content" id="printablePreview">
+      <div class="school-header">
+        <h1>EXCELLENT INTERNATIONAL SCHOOL</h1>
+        <p>Address: Baruna | Mobile: +91 7061498865</p>
+        <h2>ADMISSION FORM RECEIPT</h2>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div>
+          <p><strong>फ़ॉर्म संख्या (Form No):</strong> EIS-2026-<span id="pFormNo">101</span></p>
+          <p><strong>आवेदित कक्षा (Class Applied):</strong> <span id="pClass"></span></p>
+          <p><strong>छात्र/छात्रा का नाम:</strong> <span id="pStudentName"></span></p>
+          <p><strong>जन्म तिथि (DOB):</strong> <span id="pDob"></span> | <strong>लिंग:</strong> <span id="pGender"></span></p>
+        </div>
+        <div>
+          <img id="pPhotoDisplay" class="photo-preview" src="" alt="Student Photo">
+        </div>
+      </div>
+
+      <hr>
+      <p><strong>पिता का नाम:</strong> <span id="pFatherName"></span></p>
+      <p><strong>माता का नाम:</strong> <span id="pMotherName"></span></p>
+      <p><strong>मोबाइल नंबर:</strong> <span id="pMobile"></span></p>
+      <p><strong>पता:</strong> <span id="pAddress"></span></p>
+      <p><strong>परिवहन सुविधा:</strong> <span id="pTransport"></span></p>
+
+      <div class="section-title">शुल्क भुगतान विवरण</div>
+      <p><strong>कुल जमा राशि:</strong> <span id="pTotalFee"></span> (<span id="pPaymentMode"></span>)</p>
+
+      <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+        <div>_______________________<br><b>अभिभावक के हस्ताक्षर</b></div>
+        <div>_______________________<br><b>संस्थान / अधिकृत हस्ताक्षर</b></div>
+      </div>
+
+      <div class="modal-buttons btn-group" style="margin-top: 25px;">
+        <button class="btn btn-print" onclick="window.print()">फ़ॉर्म प्रिंट करें (Print PDF)</button>
+        <button class="btn btn-reset" onclick="closePreview()">बंद करें (Close)</button>
+      </div>
     </div>
-</div>
+  </div>
 
-<script>
-    document.getElementById('admissionDate').valueAsDate = new Date();
+  <script>
+    let photoDataUrl = "";
 
-    function calculateTotal() {
-        let inputs = document.querySelectorAll('.fee-input');
-        let total = 0;
-        inputs.forEach(input => {
-            let val = parseFloat(input.value) || 0;
-            total += val;
-        });
-        document.getElementById('totalAmount').value = total;
+    function previewStudentPhoto(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          photoDataUrl = e.target.result;
+          document.getElementById('photoDisplay').src = photoDataUrl;
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function updateFeeDetails() {
+      const selectedClass = document.getElementById('applyClass').value;
+      const transport = document.getElementById('transport').value;
+
+      let admissionFee = 0;
+      let monthlyFee = 0;
+      let transportFee = (transport === "Yes") ? 400 : 0;
+
+      if (["Nursery", "LKG", "UKG"].includes(selectedClass)) {
+        admissionFee = 500;
+        monthlyFee = 300;
+      } else if (["Class 1", "Class 2", "Class 3"].includes(selectedClass)) {
+        admissionFee = 600;
+        monthlyFee = 400;
+      } else if (["Class 4", "Class 5"].includes(selectedClass)) {
+        admissionFee = 700;
+        monthlyFee = 500;
+      }
+
+      const totalFee = admissionFee + monthlyFee + transportFee;
+
+      document.getElementById('admissionFee').innerText = '₹' + admissionFee;
+      document.getElementById('monthlyFee').innerText = '₹' + monthlyFee;
+      document.getElementById('transportFee').innerText = '₹' + transportFee;
+      document.getElementById('totalFee').innerText = '₹' + totalFee;
     }
 
     function openPreview() {
-        let name = document.getElementById('studentName').value;
-        let sClass = document.getElementById('studentClass').value;
-        let dob = document.getElementById('dob').value;
-        let father = document.getElementById('fatherName').value;
-        let mother = document.getElementById('motherName').value;
-        let aadhaar = document.getElementById('aadhaar').value;
-        let total = document.getElementById('totalAmount').value;
+      const form = document.getElementById('admissionForm');
+      if (!form.checkValidity()) {
+        alert('कृपया सभी आवश्यक विवरण (Required Fields) सही-सही भरें!');
+        form.reportValidity();
+        return;
+      }
 
-        if(!name || !sClass || !father) {
-            alert("Kripya sabhi zaroori details (Name, Class, Father Name) bharein.");
-            return;
-        }
+      document.getElementById('pClass').innerText = document.getElementById('applyClass').value;
+      document.getElementById('pStudentName').innerText = document.getElementById('studentName').value;
+      document.getElementById('pDob').innerText = document.getElementById('dob').value;
+      document.getElementById('pGender').innerText = document.getElementById('gender').value;
+      document.getElementById('pFatherName').innerText = document.getElementById('fatherName').value;
+      document.getElementById('pMotherName').innerText = document.getElementById('motherName').value;
+      document.getElementById('pMobile').innerText = document.getElementById('mobileNo').value;
+      document.getElementById('pAddress').innerText = document.getElementById('address').value;
+      document.getElementById('pTransport').innerText = document.getElementById('transport').value;
+      document.getElementById('pTotalFee').innerText = document.getElementById('totalFee').innerText;
+      document.getElementById('pPaymentMode').innerText = document.getElementById('paymentMode').value;
+      
+      document.getElementById('pPhotoDisplay').src = photoDataUrl || document.getElementById('photoDisplay').src;
 
-        let previewHTML = `
-            <p><strong>Student Name:</strong> ${name}</p>
-            <p><strong>Class:</strong> ${sClass}</p>
-            <p><strong>DOB:</strong> ${dob}</p>
-            <p><strong>Father's Name:</strong> ${father}</p>
-            <p><strong>Mother's Name:</strong> ${mother}</p>
-            <p><strong>Aadhaar No:</strong> ${aadhaar}</p>
-            <p><strong>Total Payable Amount:</strong> ₹${total}</p>
-        `;
-        document.getElementById('previewData').innerHTML = previewHTML;
-        document.getElementById('previewModal').style.display = 'block';
+      document.getElementById('previewModal').style.display = 'flex';
     }
 
     function closePreview() {
-        document.getElementById('previewModal').style.display = 'none';
+      document.getElementById('previewModal').style.display = 'none';
     }
-
-    function sendToWhatsApp() {
-        let schoolPhone = "9546427830";
-
-        let name = document.getElementById('studentName').value;
-        let sClass = document.getElementById('studentClass').value;
-        let dob = document.getElementById('dob').value;
-        let father = document.getElementById('fatherName').value;
-        let address = document.getElementById('address').value;
-        let total = document.getElementById('totalAmount').value;
-
-        if(!name || !sClass || !father) {
-            alert("Kripya form poora bharein pehle!");
-            return;
-        }
-
-        let message = *NEW ADMISSION APPLICATION*%0A +
-            *School:* New Apprehensive Public School, Baruna%0A%0A +
-            *Student Name:* ${name}%0A +
-            *Class:* ${sClass}%0A +
-            *DOB:* ${dob}%0A +
-            *Father Name:* ${father}%0A +
-            *Address:* ${address}%0A +
-            *Total Fees:* ₹${total}%0A%0A +
-            _Note: Photo and Signature attached on Portal._;
-
-        let whatsappUrl = https://wa.me/91${schoolPhone}?text=${message};
-        window.open(whatsappUrl, '_blank');
-    }
-</script>
-
+  </script>
 </body>
 </html>
